@@ -14,7 +14,7 @@ namespace DataAccess.Concrete
     {   
         public List<DTOStockDetails> GetAll(string malKodu, int baslangicTarihi, int bitisTarihi)
         {    
-            string connectionString = "server=DESKTOP-MD480VI;Database=Test;trusted_connection=true;";
+            string connectionString = "server=DESKTOP-IRSO6S9;Database=Test;trusted_connection=true;";
 
 
             using (SqlConnection connection = new SqlConnection(connectionString))

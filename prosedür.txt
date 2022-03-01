@@ -6,7 +6,7 @@ AS
 BEGIN
 
 
-INSERT INTO StokBilgisi(SiraNo,IslemTur,EvrakNo,Tarih,GirisMiktar,CikisMiktar,StokMiktar)
+INSERT INTO SP_StokSorgusu(SiraNo,IslemTur,EvrakNo,Tarih,GirisMiktar,CikisMiktar,StokMiktar)
 SELECT
 ROW_NUMBER() OVER (ORDER BY Tarih) AS SiraNo,
 CASE si.IslemTur
@@ -36,7 +36,7 @@ DECLARE @cikismiktar INT;
 DECLARE @stokmiktari INT=0;
 
 DECLARE p_RC CURSOR FOR
-SELECT SiraNo,IslemTur,EvrakNo,Tarih,GirisMiktar,CikisMiktar,StokMiktar FROM StokBilgisi
+SELECT SiraNo,IslemTur,EvrakNo,Tarih,GirisMiktar,CikisMiktar,StokMiktar FROM SP_StokSorgusu
 OPEN p_RC;
 
 FETCH NEXT FROM p_RC INTO
@@ -62,7 +62,7 @@ BEGIN
 
 SET @stokmiktari = @stokmiktari - @cikismiktar;
 END
-UPDATE StokBilgisi --Önceden dummy oluþturduðum bu tabloya ToplamStok deðiþkeni kolon kolon güncellendi
+UPDATE SP_StokSorgusu --Önceden dummy oluþturduðum bu tabloya ToplamStok deðiþkeni kolon kolon güncellendi
 SET Stokmiktar = @stokmiktari
 WHERE SiraNo=@sirano
 
@@ -79,8 +79,8 @@ FETCH NEXT FROM p_RC INTO
 END
 
 
-SELECT * FROM StokBilgisi
-TRUNCATE TABLE StokBilgisi
+SELECT * FROM SP_StokSorgusu
+TRUNCATE TABLE SP_StokSorgusu
 CLOSE p_RC  
 DEALLOCATE p_RC
 
